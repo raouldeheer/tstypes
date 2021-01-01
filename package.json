@@ -1,5 +1,5 @@
 {
-  "name": "tstypes",
+  "name": "@raouldeheer/tstypes",
   "version": "1.0.0",
   "description": "A npm package with my custom types for typescript",
   "main": "./build/index",
