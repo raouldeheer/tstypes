@@ -1,10 +1,14 @@
 {
   "name": "@raouldeheer/tstypes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A npm package with my custom types for typescript",
   "main": "./build/index",
   "types": "./build/index",
+  "files": [
+    "build/"
+  ],
   "scripts": {
+    "prepack": "tsc",
     "build": "tsc",
     "lint": "eslint -c .eslintrc --ext .ts ./ts",
     "test": "echo \"Error: no test specified\" && exit 0"
