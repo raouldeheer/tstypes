@@ -1,12 +1,11 @@
 {
   "name": "@raouldeheer/tstypes",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A npm package with my custom types for typescript",
   "main": "./build/index",
   "types": "./build/index",
   "files": [
-    "build/",
-    "ts/"
+    "build/"
   ],
   "scripts": {
     "prepack": "tsc",
