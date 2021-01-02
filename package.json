@@ -15,9 +15,7 @@
   },
   "keywords": [
     "typescript",
-    "types",
-    "npm",
-    "package"
+    "types"
   ],
   "author": "Raoul de Heer",
   "license": "MIT",
