@@ -9,10 +9,12 @@ export declare type voidCallback = () => void;
 export declare type jsonCallback = (arg0: unknown) => void;
 export declare type stringCallback = (arg0: string) => void;
 export declare type numberCallback = (arg0: number) => void;
+export declare type booleanCallback = (arg0: boolean) => void;
+export declare type objectCallback<T> = (arg0: T) => void;
 
-export declare type callback = (
-	arg0: unknown,
-	arg1?: unknown,
-	arg2?: unknown,
-	arg3?: unknown
+export declare type callback<T, U = unknown, V = unknown, W = unknown> = (
+	arg0: T,
+	arg1?: U,
+	arg2?: V,
+	arg3?: W
 ) => void;
