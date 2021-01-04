@@ -1,18 +1,17 @@
 {
   "name": "@raouldeheer/tstypes",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A npm package with my custom types for typescript",
   "main": "./build/index",
   "types": "./build/index",
   "files": [
-    "build/",
-    "ts/"
+    "build/"
   ],
   "scripts": {
     "prepack": "tsc",
     "build": "tsc",
     "lint": "eslint -c .eslintrc --ext .ts ./ts",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "npm run lint"
   },
   "repository": {
     "type": "git",
