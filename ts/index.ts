@@ -51,7 +51,30 @@ export class Matrix {
     public get clone(): Matrix {
         return new Matrix(this.rows);
     }
+    public get det(): number {
+        if (this.columCount !== this.rowCount) throw new Error("Invalid oparation");
+        return this.calcDet(this.rows, this.rowCount);
+    }
 
+    private calcDet(mat: number[][], n: number): number {
+        if (n == 1) return mat[0][0];
+        let sign = 1, result = 0;
+        for (let f = 0; f < n; f++) {
+            result += sign * mat[0][f] * this.calcDet(CoF(mat, f, n), n - 1);
+            sign = -sign;
+        }
+        return result;
+        function CoF(m: number[][], q: number, n: number): number[][] {
+            let i = 0, j = 0;
+            const t: number[][] = [];
+            for (let i = 0; i < n; i++) t.push(new Array(n));
+            for (let r = 1; r < n; r++) for (let c = 0; c < n; c++) {
+                if (c != q) t[i][j++] = m[r][c];
+                if (c != q && j == n - 1) { j = 0; i++; }
+            }
+            return t;
+        }
+    }
     protected calcRows(m: Matrix, opDir: OpDir): number[][] {
         return this.rows.map((v, i) => v.map((v2, i2) =>
             opDir === OpDir.Plus ? v2 + m.rows[i][i2] : v2 - m.rows[i][i2]));
@@ -68,21 +91,21 @@ export class Matrix {
             }
             newRows.push(newRow);
         }
-        return new Matrix(newRows);
+        return new Matrix(newRows, this.factor * m.factor);
     }
     '+'(m: Matrix): Matrix {
         if (m.rowCount !== this.rowCount || m.columCount !== this.columCount) throw new Error("Invalid oparation");
-        return new Matrix(this.calcRows(m, OpDir.Plus));
+        return new Matrix(this.calcRows(m, OpDir.Plus), this.factor + m.factor);
     }
     '-'(m: Matrix): Matrix {
         if (m.rowCount !== this.rowCount || m.columCount !== this.columCount) throw new Error("Invalid oparation");
-        return new Matrix(this.calcRows(m, OpDir.Min));
+        return new Matrix(this.calcRows(m, OpDir.Min), this.factor - m.factor);
     }
 }
 
 enum OpDir {
-    Plus = 1,
-    Min = -1,
+    Plus,
+    Min,
 }
 enum MatrixType {
     Matrix,
@@ -97,12 +120,12 @@ export class Vector2 extends Matrix {
     '+'(m: Matrix): Vector2 {
         if (m.rowCount !== this.rowCount || m.columCount !== this.columCount) throw new Error("Invalid oparation");
         const newRows = this.calcRows(m, OpDir.Plus);
-        return new Vector2(newRows[0][0], newRows[1][0]);
+        return new Vector2(newRows[0][0], newRows[1][0], this.factor + m.factor);
     }
     '-'(m: Matrix): Vector2 {
         if (m.rowCount !== this.rowCount || m.columCount !== this.columCount) throw new Error("Invalid oparation");
         const newRows = this.calcRows(m, OpDir.Min);
-        return new Vector2(newRows[0][0], newRows[1][0]);
+        return new Vector2(newRows[0][0], newRows[1][0], this.factor - m.factor);
     }
 }
 export class Vector3 extends Matrix {
@@ -112,11 +135,35 @@ export class Vector3 extends Matrix {
     '+'(m: Matrix): Vector2 {
         if (m.rowCount !== this.rowCount || m.columCount !== this.columCount) throw new Error("Invalid oparation");
         const newRows = this.calcRows(m, OpDir.Plus);
-        return new Vector3(newRows[0][0], newRows[1][0], newRows[2][0]);
+        return new Vector3(newRows[0][0], newRows[1][0], newRows[2][0], this.factor + m.factor);
     }
     '-'(m: Matrix): Vector2 {
         if (m.rowCount !== this.rowCount || m.columCount !== this.columCount) throw new Error("Invalid oparation");
         const newRows = this.calcRows(m, OpDir.Min);
-        return new Vector3(newRows[0][0], newRows[1][0], newRows[2][0]);
+        return new Vector3(newRows[0][0], newRows[1][0], newRows[2][0], this.factor - m.factor);
     }
 }
+
+const m1 = new Matrix([
+    [1, 0, 3],
+    [-1, 1, 2],
+    [4, 2, 1]]);
+
+const det = m1.det;
+console.table(m1.rows);
+console.log(det);
+console.table(m1.rows);
+
+
+const m11 = new Matrix([
+    [1, 0, 3],
+    [-1, 1, 2],
+    [4, 2, 1],
+    [0, 0, 1]], 2);
+const m2 = new Matrix([
+    [1, 0],
+    [-2, 3],
+    [0, 5]], 3);
+
+const m3 = m11["*"](m2);
+console.log(m3);
