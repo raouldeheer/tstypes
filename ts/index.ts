@@ -77,7 +77,7 @@ export class Matrix {
     }
     protected calcRows(m: Matrix, opDir: OpDir): number[][] {
         return this.rows.map((v, i) => v.map((v2, i2) =>
-            opDir === OpDir.Plus ? v2 + m.rows[i][i2] : v2 - m.rows[i][i2]));
+            opDir === OpDir.Plus ? v2 + m.rows[i][i2] : (v2 * this.factor) - (m.rows[i][i2] * m.factor)));
     }
 
     '*'(m: Matrix): Matrix {
@@ -95,11 +95,11 @@ export class Matrix {
     }
     '+'(m: Matrix): Matrix {
         if (m.rowCount !== this.rowCount || m.columCount !== this.columCount) throw new Error("Invalid oparation");
-        return new Matrix(this.calcRows(m, OpDir.Plus), this.factor + m.factor);
+        return new Matrix(this.calcRows(m, OpDir.Plus));
     }
     '-'(m: Matrix): Matrix {
         if (m.rowCount !== this.rowCount || m.columCount !== this.columCount) throw new Error("Invalid oparation");
-        return new Matrix(this.calcRows(m, OpDir.Min), this.factor - m.factor);
+        return new Matrix(this.calcRows(m, OpDir.Min));
     }
 }
 
@@ -120,12 +120,12 @@ export class Vector2 extends Matrix {
     '+'(m: Matrix): Vector2 {
         if (m.rowCount !== this.rowCount || m.columCount !== this.columCount) throw new Error("Invalid oparation");
         const newRows = this.calcRows(m, OpDir.Plus);
-        return new Vector2(newRows[0][0], newRows[1][0], this.factor + m.factor);
+        return new Vector2(newRows[0][0], newRows[1][0]);
     }
     '-'(m: Matrix): Vector2 {
         if (m.rowCount !== this.rowCount || m.columCount !== this.columCount) throw new Error("Invalid oparation");
         const newRows = this.calcRows(m, OpDir.Min);
-        return new Vector2(newRows[0][0], newRows[1][0], this.factor - m.factor);
+        return new Vector2(newRows[0][0], newRows[1][0]);
     }
 }
 export class Vector3 extends Matrix {
@@ -135,35 +135,35 @@ export class Vector3 extends Matrix {
     '+'(m: Matrix): Vector2 {
         if (m.rowCount !== this.rowCount || m.columCount !== this.columCount) throw new Error("Invalid oparation");
         const newRows = this.calcRows(m, OpDir.Plus);
-        return new Vector3(newRows[0][0], newRows[1][0], newRows[2][0], this.factor + m.factor);
+        return new Vector3(newRows[0][0], newRows[1][0], newRows[2][0]);
     }
     '-'(m: Matrix): Vector2 {
         if (m.rowCount !== this.rowCount || m.columCount !== this.columCount) throw new Error("Invalid oparation");
         const newRows = this.calcRows(m, OpDir.Min);
-        return new Vector3(newRows[0][0], newRows[1][0], newRows[2][0], this.factor - m.factor);
+        return new Vector3(newRows[0][0], newRows[1][0], newRows[2][0]);
     }
 }
 
-const m1 = new Matrix([
-    [1, 0, 3],
-    [-1, 1, 2],
-    [4, 2, 1]]);
+// const m1 = new Matrix([
+//     [1, 0, 3],
+//     [-1, 1, 2],
+//     [4, 2, 1]]);
 
-const det = m1.det;
-console.table(m1.rows);
-console.log(det);
-console.table(m1.rows);
+// const det = m1.det;
+// console.table(m1.rows);
+// console.log(det);
+// console.table(m1.rows);
 
 
-const m11 = new Matrix([
-    [1, 0, 3],
-    [-1, 1, 2],
-    [4, 2, 1],
-    [0, 0, 1]], 2);
-const m2 = new Matrix([
-    [1, 0],
-    [-2, 3],
-    [0, 5]], 3);
+// const m11 = new Matrix([
+//     [1, 0, 3],
+//     [-1, 1, 2],
+//     [4, 2, 1],
+//     [0, 0, 1]], 2);
+// const m2 = new Matrix([
+//     [1, 0],
+//     [-2, 3],
+//     [0, 5]], 3);
 
-const m3 = m11["*"](m2);
-console.log(m3);
+// const m3 = m11["*"](m2);
+// console.log(m3);
