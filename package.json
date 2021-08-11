@@ -31,7 +31,7 @@
   "homepage": "https://github.com/raouldeheer/tstypes#readme",
   "devDependencies": {
     "@types/express": "^4.17.9",
-    "@types/jest": "^26.0.22",
+    "@types/jest": "^27.0.0",
     "@types/node": "^16.0.0",
     "@typescript-eslint/eslint-plugin": "^4.0.0",
     "@typescript-eslint/parser": "^4.22.0",
