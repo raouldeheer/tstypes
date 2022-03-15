@@ -33,7 +33,8 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - run: npm ci
+      - run: npm install pnpm -g
+      - run: pnpm install
       - run: npm test
 
   publish-npm:
