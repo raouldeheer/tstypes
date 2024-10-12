@@ -33,7 +33,7 @@ export class Matrix {
     }
 
     public get colums(): number[][] {
-        const colums = [];
+        const colums: number[][] = [];
         for (let i = 0; i < this.columCount; i++) {
             colums.push(this.rows.reduce((prev: number[], curr: number[]) => [...prev, curr[i]], []));
         }
@@ -80,12 +80,12 @@ export class Matrix {
             opDir === OpDir.Plus ? v2 + m.rows[i][i2] : (v2 * this.factor) - (m.rows[i][i2] * m.factor)));
     }
 
-    '*'(m: Matrix): Matrix {
+    "*"(m: Matrix): Matrix {
         if (m.rowCount !== this.columCount) throw new Error("Invalid oparation");
-        const newRows = [];
+        const newRows: number[][] = [];
         const mColums = m.colums;
         for (let i = 0; i < this.rowCount; i++) {
-            const newRow = [];
+            const newRow: number[] = [];
             for (let j = 0; j < m.columCount; j++) {
                 newRow.push(this.rows[i].reduce((prev: number, curr: number, i2: number) => prev + (mColums[j][i2] * curr), 0));
             }
@@ -93,11 +93,11 @@ export class Matrix {
         }
         return new Matrix(newRows, this.factor * m.factor);
     }
-    '+'(m: Matrix): Matrix {
+    "+"(m: Matrix): Matrix {
         if (m.rowCount !== this.rowCount || m.columCount !== this.columCount) throw new Error("Invalid oparation");
         return new Matrix(this.calcRows(m, OpDir.Plus));
     }
-    '-'(m: Matrix): Matrix {
+    "-"(m: Matrix): Matrix {
         if (m.rowCount !== this.rowCount || m.columCount !== this.columCount) throw new Error("Invalid oparation");
         return new Matrix(this.calcRows(m, OpDir.Min));
     }
@@ -143,27 +143,3 @@ export class Vector3 extends Matrix {
         return new Vector3(newRows[0][0], newRows[1][0], newRows[2][0]);
     }
 }
-
-// const m1 = new Matrix([
-//     [1, 0, 3],
-//     [-1, 1, 2],
-//     [4, 2, 1]]);
-
-// const det = m1.det;
-// console.table(m1.rows);
-// console.log(det);
-// console.table(m1.rows);
-
-
-// const m11 = new Matrix([
-//     [1, 0, 3],
-//     [-1, 1, 2],
-//     [4, 2, 1],
-//     [0, 0, 1]], 2);
-// const m2 = new Matrix([
-//     [1, 0],
-//     [-2, 3],
-//     [0, 5]], 3);
-
-// const m3 = m11["*"](m2);
-// console.log(m3);
